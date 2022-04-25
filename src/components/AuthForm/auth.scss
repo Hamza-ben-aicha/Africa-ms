@@ -1,0 +1,220 @@
+@import "../../styles/variables.scss";
+*,
+*:before,
+*:after,
+ul,
+li,
+a,
+button,
+input,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+img,
+image,
+svg,
+path,
+g,
+canvas {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: transparent;
+  border: none;
+  text-decoration: none;
+  font-family: $Popins;
+  user-select: none;
+  list-style: none;
+  position: relative;
+}
+
+@mixin size($width: inherit, $height: inherit) {
+  width: $width;
+  height: $height;
+}
+
+@mixin flex($align, $justify, $direction: row) {
+  display: flex;
+  align-items: $align;
+  justify-content: $justify;
+  flex-direction: $direction;
+}
+
+@mixin border-radius(
+  $topLeft: 50%,
+  $topRight: 50%,
+  $botLeft: 50%,
+  $botRight: 50%
+) {
+  border-top-left-radius: $topLeft;
+  border-top-right-radius: $topRight;
+  border-bottom-left-radius: $botLeft;
+  border-bottom-right-radius: $botRight;
+}
+
+$deepBlue-5: #fffbf2;
+$deepBlue-100: #a50113;
+$blue-5: #e2dbdb;
+$blue-80: #c10206;
+$blue-100: #c10206;
+$login-container-shadow: 0 1px 3px #211d21, 0 1px 2px #010a10;
+$button-shadow: 0 1px 4px #211d21, 0 1px 2px #010a10;
+
+.html,
+body {
+  background-color: #fafafa;
+  margin: 0;
+  padding: 0;
+}
+
+.button {
+  @include flex(center, center);
+  box-shadow: $button-shadow;
+  background-color: $blue-5;
+  text-transform: capitalize;
+  cursor: pointer;
+
+  &:hover,
+  &:focus {
+    transition: 0.15s ease-in-out;
+  }
+}
+
+.login-container {
+  @include size(400px, auto);
+  @include flex(center, center, column);
+  height: 50%;
+  border-radius: 15px;
+  box-shadow: 0px 0px 210px 5px rgba($darkGray, 0.3);
+  margin: 0 auto;
+  background-color: $bg;
+  overflow: hidden;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  position: relative;
+
+  .title {
+    text-transform: capitalize;
+    font-size: 1.6em;
+    font-weight: 300;
+    font-family: $Popins;
+    padding: 40px 0;
+    padding-bottom: 10px;
+  }
+
+  .login-button {
+    @include border-radius(5px, 5px, 5px, 5px);
+    font-family: $Popins;
+    width: 25%;
+    padding: 5px 0 5px 0;
+    background-color: #1e1e1e;
+    color: #fff;
+
+    letter-spacing: 1px;
+    font-weight: 400;
+    margin: 40px 0;
+
+    &:hover,
+    &:focus {
+      box-shadow: 0px 3px 20px 3px rgba(#24a0ed, 0.3);
+      background-color: #24a0ed;
+    }
+  }
+
+  .forget-pasword-button {
+    font-family: $Popins;
+    font-size: small;
+    width: 75%;
+    letter-spacing: 1px;
+    color: #a50113;
+    &:hover,
+    &:focus {
+      color: #ffa1a3;
+    }
+  }
+}
+
+.fluid-input {
+  @include size(80%, 50px);
+  max-width: 450px;
+  position: relative;
+
+  &-bg {
+    @include size(calc(100% - 10%), 100%);
+    @include flex(center, flex-start);
+    position: absolute;
+    left: 5%;
+    top: 0;
+    color: $blue-100;
+    font-weight: 400;
+    font-size: 0.9em;
+    transition: 0.3s ease-in-out;
+    text-transform: capitalize;
+  }
+
+  &-holder {
+    @include size(100%, 100%);
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    @include border-radius(15px, 15px, 15px, 15px);
+    will-change: transform, box-shadow;
+    transition: 0.2s ease-in-out;
+    background-color: $deepBlue-5;
+  }
+  &-input {
+    @include size();
+    @include border-radius(5px, 5px, 5px, 5px);
+    background-color: $deepBlue-5;
+    font-size: 1.05em;
+    padding: 0 5%;
+
+    &:focus {
+      outline: None;
+    }
+  }
+
+  &-label {
+    @include size(calc(100% - 10%), 100%);
+    @include flex(center, start);
+    font-family: $Popins;
+    position: absolute;
+    font-size: 1em;
+    opacity: 50%;
+    left: 5%;
+    top: 0;
+    color: $blue-100;
+    font-weight: 400;
+    text-transform: capitalize;
+    pointer-events: none;
+    transition: transform 0.2s ease-in-out, font-size 0.2s 0.15s ease-in-out;
+    will-change: transform, font-size;
+    
+  }
+
+  &--focus & {
+    &-holder {
+      box-shadow: 0px 5px 20px 0px rgba($deepBlue-100, 0.3);
+    }
+
+    &-bg {
+      transform: translateY(-40px);
+      transition: 0.2s 0.2s ease-in-out;
+    }
+
+    &-label {
+      transform: translateY(-40px);
+    }
+  }
+
+  &--open & {
+    &-label {
+      transform: translateY(-40px);
+    }
+  }
+}

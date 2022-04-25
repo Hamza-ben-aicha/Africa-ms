@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Mukta&family=Poppins:wght@400;500;600;700;800&display=swap');
+
+//fonts
+$Popins:'Poppins', sans-serif;
+
+//colors
+$darkRed:#A50113;
+$red:#c10206;
+$bg:#fffbf2;
+$gray:#dfe2db;
+$darkGray:#211d21;
+$dark:#010a10;
+
+// spacing
+$spacing-md: 16px;
+$spacing-lg: 32px;
+
+// border radius
+$borderRadius: 12px;
+
+// header height
+$headerHeight: 90px;
+
+@mixin breakpoint($point) {
+    @if $point == md {
+        // 768px
+        @media (min-width: 48em) {
+            @content;
+        }
+    }
+}
