@@ -37,18 +37,9 @@ const Header = () => {
     setMenuOpen((p) => !p);
   };
 
-  const ctaClickHandler = () => {
-    menuToggleHandler();
-    history("/authenticationForm");
-  };
-
-  const curentUser = JSON.parse(localStorage.getItem("curentUser"));
   return (
     <header className={classes.header}>
       <div className={classes.header__content}>
-        <Link to="/" className={classes.header__content__logo}>
-          {/* <img src={logo} alt="AMS" /> */} Africa MS
-        </Link>
         <nav
           className={`${classes.header__content__nav} ${
             menuOpen && size.width < 768 ? classes.isMenu : ""
@@ -56,29 +47,20 @@ const Header = () => {
         >
           <ul>
             <li>
-              <Link to="/page-one" onClick={menuToggleHandler}>
-                Normes
+              <Link to="/profile/notifications" onClick={menuToggleHandler}>
+                Notifications
               </Link>
             </li>
             <li>
-              <Link to="/page-two" onClick={menuToggleHandler}>
-                A propos de l'Ams
+              <Link to="/profile/modifier" onClick={menuToggleHandler}>
+                modifier votre profile
               </Link>
             </li>
             <li>
-              <Link to="/page-three" onClick={menuToggleHandler}>
-                Actualités
+              <Link to="/profile/projets" onClick={menuToggleHandler}>
+                projets
               </Link>
             </li>
-            {curentUser ? (
-              <li>
-                <Link to="/profile" onClick={menuToggleHandler}>
-                  {curentUser?.user?.nom + " " + curentUser?.user?.prenom}
-                </Link>
-              </li>
-            ) : (
-              <button onClick={ctaClickHandler}>Login</button>
-            )}
           </ul>
         </nav>
         <div className={classes.header__content__toggle}>

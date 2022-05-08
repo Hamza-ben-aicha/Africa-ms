@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import "./auth.scss";
 import { Button, ForgetPassword } from "../../Elements";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import classes from "./Layout.module.scss";
 const initialState = {
   email: "",
   password: "",
@@ -8,11 +11,7 @@ const initialState = {
 
 const LoginContainer = () => {
   const [credentials, setCredentials] = useState(initialState);
-
-  const loginListenner = () => {
-    console.log(credentials);
-  };
-
+  const history=useNavigate();
   const handleChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
     console.log(credentials);
@@ -40,7 +39,23 @@ const LoginContainer = () => {
     inputClass += " fluid-input--open";
   }
 
+  //------------------------------------------------------------------------
+  const handleSubmit = (e) => {
+    axios
+      .post("http://localhost:3000/login", credentials, [])
+      .then((res) => {
+        console.log(res.data);
+        const user = res.data.token.user;
+        const token = res.data.token.token;
+        localStorage.setItem("curentUser", JSON.stringify({ user, token }));
+        history("/profile");
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
+<div className={classes.container}>
+
     <div className="login-container">
       <div className="title">Login</div>
       {/* <FluidInput
@@ -89,9 +104,10 @@ const LoginContainer = () => {
       <Button
         buttonText="log in"
         buttonClass="login-button"
-        onClick={loginListenner}
+        onClick={handleSubmit}
       />
     </div>
+</div>
   );
 };
 
