@@ -4,11 +4,10 @@ import { BiMenuAltRight } from "react-icons/bi";
 import { AiOutlineClose } from "react-icons/ai";
 
 import classes from "./Header.module.scss";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 
 const Header = () => {
-  const history = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const [size, setSize] = useState({
     width: undefined,
@@ -25,7 +24,7 @@ const Header = () => {
     window.addEventListener("resize", handleResize);
 
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [size]);
 
   useEffect(() => {
     if (size.width > 768 && menuOpen) {

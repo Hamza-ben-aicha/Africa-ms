@@ -6,7 +6,6 @@ import { AiOutlineClose } from "react-icons/ai";
 import classes from "./Header.module.scss";
 import { Link, useNavigate } from "react-router-dom";
 
-
 const Header = () => {
   const history = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -25,7 +24,7 @@ const Header = () => {
     window.addEventListener("resize", handleResize);
 
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [size]);
 
   useEffect(() => {
     if (size.width > 768 && menuOpen) {
@@ -42,7 +41,14 @@ const Header = () => {
     history("/authenticationForm");
   };
 
+  const disconectHandler = () => {
+    localStorage.clear();
+    history("/");
+    window.location.reload(false);
+  };
+
   const curentUser = JSON.parse(localStorage.getItem("curentUser"));
+
   return (
     <header className={classes.header}>
       <div className={classes.header__content}>
@@ -75,6 +81,7 @@ const Header = () => {
                 <Link to="/profile" onClick={menuToggleHandler}>
                   {curentUser?.user?.nom + " " + curentUser?.user?.prenom}
                 </Link>
+                <button onClick={disconectHandler}>disconect</button>
               </li>
             ) : (
               <button onClick={ctaClickHandler}>Login</button>

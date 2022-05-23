@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import "./auth.scss";
 import { Button, ForgetPassword } from "../../Elements";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import classes from "./Layout.module.scss";
+import API from "../../api/index";
+
 const initialState = {
   email: "",
   password: "",
@@ -11,7 +12,7 @@ const initialState = {
 
 const LoginContainer = () => {
   const [credentials, setCredentials] = useState(initialState);
-  const history=useNavigate();
+  const navigate=useNavigate();
   const handleChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
     console.log(credentials);
@@ -41,14 +42,14 @@ const LoginContainer = () => {
 
   //------------------------------------------------------------------------
   const handleSubmit = (e) => {
-    axios
-      .post("http://localhost:3000/login", credentials, [])
+    API.post('login', credentials)
       .then((res) => {
         console.log(res.data);
-        const user = res.data.token.user;
-        const token = res.data.token.token;
+        const user = res?.data?.token?.user;
+        const token = res?.data?.token?.token;
         localStorage.setItem("curentUser", JSON.stringify({ user, token }));
-        history("/profile");
+        window.location.reload(false);
+        navigate("/profile");
       })
       .catch((err) => console.log(err));
   };

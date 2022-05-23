@@ -1,62 +1,146 @@
-import React from 'react'
+import axios from "axios";
+import React, { useState } from "react";
+import { Button} from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { mainUrl } from "../../constant/urls";
 
-import { MDBContainer, MDBRow, MDBCol, MDBBtn } from "mdbreact";
-
+// const initialState = {
+//   nom: "hamza",
+//   prenom: "ben aicha ",
+//   email: "....@...com",
+//   password: "password",
+//   adress: "rue .20...",
+// };
 
 const Modifierprofile = () => {
- 
- return (
-     <MDBRow>
-       <MDBCol md="6">
-         <form>
-           <p className="h4 text-center mb-4">Sign up</p>
-           <label htmlFor="defaultFormRegisterNameEx" className="grey-text">
-             Your name
-           </label>
-           <input
-             type="text"
-             id="defaultFormRegisterNameEx"
-             className="form-control"
-           />
-           <br />
-           <label htmlFor="defaultFormRegisterEmailEx" className="grey-text">
-             Your email
-           </label>
-           <input
-             type="email"
-             id="defaultFormRegisterEmailEx"
-             className="form-control"
-           />
-           <br />
-           <label htmlFor="defaultFormRegisterConfirmEx" className="grey-text">
-             Confirm your email
-           </label>
-           <input
-             type="email"
-             id="defaultFormRegisterConfirmEx"
-             className="form-control"
-           />
-           <br />
-           <label htmlFor="defaultFormRegisterPasswordEx" className="grey-text">
-             Your password
-           </label>
-           <input
-             type="password"
-             id="defaultFormRegisterPasswordEx"
-             className="form-control"
-           />
-           <div className="text-center mt-4">
-             <MDBBtn color="unique" type="submit">
-               Register
-             </MDBBtn>
-           </div>
-         </form>
-       </MDBCol>
-     </MDBRow>
+  const user = JSON.parse(localStorage.getItem("curentUser"));
 
- );
+  const [state, setstate] = useState(user.user);
+  const navigate = useNavigate();
+  const [initialState, setinitialState] = useState({
+    nom: state?.nom,
+    prenom: state?.prenom,
+    email: state?.email,
+    adress: state?.adress,
+    password: "",
+    telephone:51761176
+  });
 
-}
+  // console.log("state ----- >", state.user);
+  // console.log(user.user);
+  const handleChange = (e) => {
+    setinitialState({ ...initialState, [e.target.name]: e.target.value });
+    //console.log(initialState);
+  };
+  const handleUpdate = () => {
+    console.log(initialState);
+    axios
+      .patch(`${mainUrl}update_user/${state.id}`,  initialState )
+      .then((res) => {
+        axios
+          .post(`${mainUrl}login`, {
+            email: initialState.email,
+            password: initialState.password,
+          })
+          .then((res) => {
+            console.log(res.data);
+            const user = res?.data?.token?.user;
+            const token = res?.data?.token?.token;
+            localStorage.setItem("curentUser", JSON.stringify({ user, token }));
+            window.location.reload(false);
+            navigate("/profile");
+          })
+          .catch((err) => console.log(err));
 
-export default Modifierprofile
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  return (
+    <div className="card container" style={{ marginTop: "50px" }}>
+      {/* <div className="card-header ">Modifier votre Compte</div> */}
+      <div className="card-body">
+        <h5 className="card-title text-center">Account Settings</h5>
 
+        <br />
+        <form>
+          <label htmlFor="defaultFormRegisterNameEx" className="grey-text">
+            Your name
+          </label>
+          <input
+            type="text"
+            id="defaultFormRegisterNameEx"
+            defaultValue={initialState?.nom}
+            className="form-control"
+            name="nom"
+            onChange={handleChange}
+          />
+          <br />
+          <label htmlFor="defaultFormRegisterEmailEx" className="grey-text">
+            Your lastname
+          </label>
+          <input
+            type="text"
+            defaultValue={initialState?.prenom}
+            id="defaultFormRegisterLastNameEx"
+            className="form-control"
+            name="prenom"
+            onChange={handleChange}
+          />
+          <br />
+          <label htmlFor="defaultFormRegisterConfirmEx" className="grey-text">
+            Your adress
+          </label>
+          <input
+            type="text"
+            defaultValue={initialState?.adress}
+            id="defaultFormRegisterNameEx"
+            className="form-control"
+            name="adress"
+            onChange={handleChange}
+          />
+          <br />
+          <label htmlFor="defaultFormRegisterConfirmEx" className="grey-text">
+            Your email
+          </label>
+          <input
+            type="email"
+            defaultValue={initialState?.email}
+            id="defaultFormRegisterEmailEx"
+            className="form-control"
+            name="email"
+            onChange={handleChange}
+          />
+          <br />
+          <label htmlFor="defaultFormRegisterPasswordEx" className="grey-text">
+            New password
+          </label>
+          <input
+            type="password"
+            id="defaultFormRegisterPasswordEx"
+            className="form-control"
+            name="password"
+            onChange={handleChange}
+          />
+          <br />
+          <label htmlFor="defaultFormRegisterPasswordEx" className="grey-text">
+            confirm password
+          </label>
+          <input
+            type="password"
+            id="defaultFormRegisterPasswordEx"
+            className="form-control"
+          />
+          <div className="text-center mt-4">
+            <Button variant="primary" onClick={handleUpdate}>
+              Done
+            </Button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default Modifierprofile;
