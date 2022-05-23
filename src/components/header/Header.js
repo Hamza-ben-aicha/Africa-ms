@@ -79,7 +79,7 @@ const Header = () => {
             {curentUser ? (
               <li>
                 <Link to="/profile" onClick={menuToggleHandler}>
-                  {curentUser?.user?.nom + " " + curentUser?.user?.prenom}
+                  {curentUser?.user?.username}
                 </Link>
                 <button onClick={disconectHandler}>disconect</button>
               </li>

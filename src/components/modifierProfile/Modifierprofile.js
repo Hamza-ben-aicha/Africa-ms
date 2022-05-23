@@ -18,12 +18,11 @@ const Modifierprofile = () => {
   const [state, setstate] = useState(user.user);
   const navigate = useNavigate();
   const [initialState, setinitialState] = useState({
-    nom: state?.nom,
-    prenom: state?.prenom,
+    username: state?.username,
     email: state?.email,
     adress: state?.adress,
     password: "",
-    telephone:51761176
+    telephone: state?.telephone
   });
 
   // console.log("state ----- >", state.user);
@@ -66,26 +65,14 @@ const Modifierprofile = () => {
         <br />
         <form>
           <label htmlFor="defaultFormRegisterNameEx" className="grey-text">
-            Your name
+            Your UserName
           </label>
           <input
             type="text"
             id="defaultFormRegisterNameEx"
-            defaultValue={initialState?.nom}
+            defaultValue={initialState?.username}
             className="form-control"
-            name="nom"
-            onChange={handleChange}
-          />
-          <br />
-          <label htmlFor="defaultFormRegisterEmailEx" className="grey-text">
-            Your lastname
-          </label>
-          <input
-            type="text"
-            defaultValue={initialState?.prenom}
-            id="defaultFormRegisterLastNameEx"
-            className="form-control"
-            name="prenom"
+            name="username"
             onChange={handleChange}
           />
           <br />
@@ -110,6 +97,18 @@ const Modifierprofile = () => {
             id="defaultFormRegisterEmailEx"
             className="form-control"
             name="email"
+            onChange={handleChange}
+          />
+          <br />
+          <label htmlFor="defaultFormRegisterConfirmEx" className="grey-text">
+            Your Phone number
+          </label>
+          <input
+            type="number"
+            defaultValue={initialState?.telephone}
+            id="defaultFormRegisterEmailEx"
+            className="form-control"
+            name="telephone"
             onChange={handleChange}
           />
           <br />

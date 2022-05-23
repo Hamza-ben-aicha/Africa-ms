@@ -1,37 +1,35 @@
 import React, { useEffect, useState } from "react";
-import     API  from "../../api/index.js";
+import API from "../../api/index.js";
 const ProjectTable = (id) => {
   const [projectsTable, setProjectsTable] = useState([
     { NormeId: "", date_deb: "", date_fin: "" },
   ]);
   const [entreprises, setEntreprises] = useState([]);
-  const [normes , setNormes]= useState([]);
+  const [normes, setNormes] = useState([]);
 
   let index = 0;
-  console.log(index);
 
-  
   useEffect(() => {
-    if(localStorage.getItem("curentUser")){
+    if (localStorage.getItem("curentUser")) {
       const curentUser = JSON.parse(localStorage.getItem("curentUser"));
-      if(curentUser?.user?.role ==="entreprise"){
-        console.log("")
+      if (curentUser?.user?.role === "entreprise") {
+            console.log("------");
+      } else {
+        if (curentUser?.user?.role === "consultant") {
+          API.get(`getPC/1`)
+            .then((result) => {
+              //console.log(result);
+              setProjectsTable(result?.data?.projects);
+              setEntreprises(result?.data?.EntrepriseNames);
+              setNormes(result?.data?.Normes);
+              // console.log(result?.data?.projects);
+              // console.log(result?.data?.EntrepriseNames);
+            })
+            .catch((err) => {
+              console.log("err");
+            });
+        }
       }
-      if (curentUser?.user?.role === "consultant") {
-        API.get(`getPC/1`)
-          .then((result) => {
-            //console.log(result);
-            setProjectsTable(result?.data?.projects);
-            setEntreprises(result?.data?.EntrepriseNames);
-            setNormes(result?.data?.Normes);
-            // console.log(result?.data?.projects);
-            // console.log(result?.data?.EntrepriseNames);
-          })
-          .catch((err) => {
-            console.log("err");
-          });
-      }
-      
     }
   }, []);
 
@@ -52,8 +50,8 @@ const ProjectTable = (id) => {
           {projectsTable?.map((project) => (
             <tr key={project?.id}>
               <td className="tableCell">
-                {entreprises[index]} 
-                {index++}
+                {entreprises[index]}
+                <span hidden>{index++}</span>
               </td>
               <td className="tableCell">{normes[index]}</td>
               <td className="tableCell">{project?.date_deb}</td>
