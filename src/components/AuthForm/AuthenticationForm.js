@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./auth.scss";
 import { Button, ForgetPassword } from "../../Elements";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, } from "react-router-dom";
 import classes from "./Layout.module.scss";
 import API from "../../api/index";
 

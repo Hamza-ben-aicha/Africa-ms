@@ -1,9 +1,12 @@
-import React from 'react'
+import React ,{useContext}from 'react'
+import { UserContext } from '../../context/userContext';
 
 const Notifications = () => {
-  return (
-    <div>Notifications</div>
-  )
+  const decode = useContext(UserContext);
+  console.log('====================================');
+  console.log(decode);
+  console.log('====================================');
+  return <a href="http://localhost:3000/">dashboard</a>;
 }
 
 export default Notifications

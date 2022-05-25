@@ -1,8 +1,7 @@
-import axios from "axios";
 import React, { useState } from "react";
 import { Button} from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { mainUrl } from "../../constant/urls";
+import API from "../../api";
 
 // const initialState = {
 //   nom: "hamza",
@@ -32,12 +31,12 @@ const Modifierprofile = () => {
     //console.log(initialState);
   };
   const handleUpdate = () => {
-    console.log(initialState);
-    axios
-      .patch(`${mainUrl}update_user/${state.id}`,  initialState )
+
+    API
+      .patch(`update_user/${state.id}`,  initialState )
       .then((res) => {
-        axios
-          .post(`${mainUrl}login`, {
+        API
+          .post(`login`, {
             email: initialState.email,
             password: initialState.password,
           })
@@ -112,6 +111,14 @@ const Modifierprofile = () => {
             onChange={handleChange}
           />
           <br />
+          <hr>
+          </hr>
+            <span>
+              you can add new password or give us your actuall password to
+              confirm that changment
+            </span> 
+            <br/>
+            <br/>
           <label htmlFor="defaultFormRegisterPasswordEx" className="grey-text">
             New password
           </label>

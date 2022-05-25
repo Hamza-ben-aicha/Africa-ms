@@ -9,37 +9,59 @@ import Profile from "./pages/profile/Profile";
 import Notifications from "./components/notifications/notifications";
 import Modifierprofile from "./components/modifierProfile/Modifierprofile";
 import ProjectTable from "./components/projectTable/ProjectTable";
+import { UserContext } from "./context/userContext";
+import { useEffect, useState } from "react";
+import API from "./api";
+import EntProjects from "./components/enProjects/EntProjects";
+import OneProject from "./components/oneProject/OneProject";
 function App() {
   const curentUser = JSON.parse(localStorage.getItem("curentUser"));
-  
+  const [user, setUser] = useState();
+  useEffect(() => {
+    if (curentUser) {
+      API.post("/decodeToken").then((result) => {
+        setUser(result?.data);
+      });
+    } else {
+      setUser(null);
+    }
+  }, []);
+
   return (
     <Layout>
-      <Routes>
-        <Route path="/" exact element={<Home />} />
-        <Route path="/page-one" exact element={<PageOne />} />
-        <Route path="/page-two" exact element={<PageTwo />} />
-        <Route path="/page-three" exact element={<PageThree />} />
-        <Route
-          path="/authenticationForm"
-          exact
-          element={
-            !curentUser ? <AuthenticationForm /> : <Navigate to="/profile" />
-          }
-        />
-        <Route
-          path="/profile"
-          exact
-          element={curentUser ? <Profile /> : <Navigate to="/" />}
-        >
-          <Route path="notifications" exact element={<Notifications />} />
-          <Route path="modifier" exact element={<Modifierprofile />} />
+      <UserContext.Provider value={user}>
+        <Routes>
+          <Route path="/" exact element={<Home />} />
+          <Route path="/page-one" exact element={<PageOne />} />
+          <Route path="/page-two" exact element={<PageTwo />} />
+          <Route path="/page-three" exact element={<PageThree />} />
           <Route
-            path="projets"
+            path="/authenticationForm"
             exact
-            element={<ProjectTable id={curentUser?.user?.id} />}
+            element={
+              !curentUser ? <AuthenticationForm /> : <Navigate to="/profile" />
+            }
           />
-        </Route>
-      </Routes>
+          {/* <UserContext.Provider > */}
+          <Route
+            path="/profile"
+            exact
+            element={curentUser ? <Profile /> : <Navigate to="/" />}
+          >
+            <Route path="notifications" exact element={<Notifications />} />
+            <Route path="modifier" exact element={<Modifierprofile />} />
+            <Route
+              path="projets"
+              exact
+              element={
+                user?.role === "entreprise" ? <EntProjects /> : <ProjectTable />
+              }
+            />
+            <Route path="projet/:id" exact element={<OneProject />} />
+          </Route>
+          {/* </UserContext.Provider> */}
+        </Routes>
+      </UserContext.Provider>
     </Layout>
   );
 }
