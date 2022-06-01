@@ -1,0 +1,92 @@
+{
+    "id": 16,
+    "norme": "9000",
+    "chapitres": [
+        {
+            "id": 4,
+            "Chapitres": "chapitre 1",
+            "articles": [
+                {
+                    "id": 6,
+                    "Articles": "article 1",
+                    "questions": [
+                        {
+                            "id": 8,
+                            "Questions": "question 1",
+                            "result": null
+                        },
+                        {
+                            "id": 9,
+                            "Questions": "question 2",
+                            "result": null
+                        },
+                        {
+                            "id": 10,
+                            "Questions": "question 3",
+                            "result": null
+                        },
+                        {
+                            "id": 20,
+                            "Questions": "question 4 test",
+                            "result": null
+                        }
+                    ]
+                },
+                {
+                    "id": 9,
+                    "Articles": "article 2",
+                    "questions": [
+                        {
+                            "id": 11,
+                            "Questions": "question 12",
+                            "result": null
+                        },
+                        {
+                            "id": 12,
+                            "Questions": "question 4",
+                            "result": null
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 6,
+            "Chapitres": "chapitre 2",
+            "articles": [
+                {
+                    "id": 13,
+                    "Articles": "article 1",
+                    "questions": [
+                        {
+                            "id": 16,
+                            "Questions": "question 1",
+                            "result": null
+                        },
+                        {
+                            "id": 17,
+                            "Questions": "question 2",
+                            "result": null
+                        }
+                    ]
+                },
+                {
+                    "id": 14,
+                    "Articles": "article 2",
+                    "questions": [
+                        {
+                            "id": 18,
+                            "Questions": "question 1",
+                            "result": null
+                        },
+                        {
+                            "id": 19,
+                            "Questions": "question 2",
+                            "result": null
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

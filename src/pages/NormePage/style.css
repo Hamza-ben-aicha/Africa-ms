@@ -1,0 +1,10 @@
+.slide-image {
+  /* -webkit-mask-image: linear-gradient(black); */
+  /* mask-image: linear-gradient(black); */
+  width: 100%;
+    
+}
+
+.cardBody{
+  width: 100%;
+}

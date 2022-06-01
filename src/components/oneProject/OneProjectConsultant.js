@@ -1,9 +1,10 @@
+import { Button } from "bootstrap";
 import React, { useEffect, useState } from "react";
 import { Spinner } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import API from "../../api/index";
 
-const OneProject = () => {
+const OneProjectConsultant = () => {
   const params = useParams();
   const [state, setState] = useState(false);
   const [norme, setNorme] = useState("");
@@ -11,6 +12,7 @@ const OneProject = () => {
   const [article, setArticle] = useState([]);
   const [question, setQuestion] = useState([]);
   const [resQuestion, setResQuestion] = useState([]);
+
   useEffect(() => {
     API.get(`/getbyId_projet/${params.id}`).then((result) => {
       const data = result.data;
@@ -37,7 +39,7 @@ const OneProject = () => {
           <h1>Iso {norme.norme}</h1>
           <br />
           <table className="table table-sm">
-            <thead >
+            <thead>
               <tr>
                 <th
                   scope="col"
@@ -143,12 +145,12 @@ const OneProject = () => {
               ))} */}
             </tbody>
           </table>
+          {/* <Button onClick={}></Button> */}
         </>
-      ) : (
-        <Spinner animation="grow" />
-      )}
+      ) : <Spinner animation="grow" />}
+        
     </div>
   );
 };
 
-export default OneProject;
+export default OneProjectConsultant;
