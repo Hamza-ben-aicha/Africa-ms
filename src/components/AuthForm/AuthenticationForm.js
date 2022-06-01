@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./auth.scss";
 import { Button, ForgetPassword } from "../../Elements";
-import { useNavigate, } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import classes from "./Layout.module.scss";
 import API from "../../api/index";
 
@@ -12,7 +12,7 @@ const initialState = {
 
 const LoginContainer = () => {
   const [credentials, setCredentials] = useState(initialState);
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const handleChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
     console.log(credentials);
@@ -41,25 +41,28 @@ const LoginContainer = () => {
   }
 
   //------------------------------------------------------------------------
+  const [error,setError]=useState(false)
+  //------------------------------------------------------------------------
   const handleSubmit = (e) => {
-    API.post('login', credentials)
+    API.post("login", credentials)
       .then((res) => {
-        console.log(res.data);
-        const user = res?.data?.token?.user;
-        const token = res?.data?.token?.token;
-        localStorage.setItem("curentUser", JSON.stringify({ user, token }));
-        window.location.reload(false);
-        navigate("/profile");
+          if (res.status === 200) {
+            console.log(res.data);
+            const user = res?.data?.token?.user;
+            const token = res?.data?.token?.token;
+            localStorage.setItem("curentUser", JSON.stringify({ user, token }));
+            window.location.reload(false);
+            navigate("/profile");
+          }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => setError(true));
   };
 
   return (
-<div className={classes.container}>
-
-    <div className="login-container">
-      <div className="title">Login</div>
-      {/* <FluidInput
+    <div className={classes.container}>
+      <div className="login-container">
+        <div className="title">Login</div>
+        {/* <FluidInput
         type="email"
         label="Email f"
         style={style}
@@ -67,48 +70,49 @@ const LoginContainer = () => {
         name="email"
         onChange={handleChange}
       /> */}
-      <div className={inputClass} style={style}>
-        <div className="fluid-input-holder">
-          <input
-            name="email"
-            className="fluid-input-input"
-            type="email"
-            id="email"
-            onFocus={focusField}
-            onBlur={focusField}
-            autoComplete="off"
-            onChange={handleChange}
-            placeholder="Email"
-          />
+        <div className={inputClass} style={style}>
+          <div className="fluid-input-holder">
+            <input
+              name="email"
+              className="fluid-input-input"
+              type="email"
+              id="email"
+              onFocus={focusField}
+              onBlur={focusField}
+              autoComplete="off"
+              onChange={handleChange}
+              placeholder="Email"
+            />
+          </div>
         </div>
-      </div>
-      <div className={inputClass} style={style}>
-        <div className="fluid-input-holder">
-          <input
-            name="password"
-            className="fluid-input-input"
-            type="password"
-            id="password"
-            onFocus={focusField}
-            onBlur={focusField}
-            autoComplete="off"
-            onChange={handleChange}
-            placeholder="Password "
-          />
+        <div className={inputClass} style={style}>
+          <div className="fluid-input-holder">
+            <input
+              name="password"
+              className="fluid-input-input"
+              type="password"
+              id="password"
+              onFocus={focusField}
+              onBlur={focusField}
+              autoComplete="off"
+              onChange={handleChange}
+              placeholder="Password "
+            />
+          </div>
         </div>
-      </div>
 
-      <ForgetPassword
-        buttonText="forget password ?"
-        buttonClass="forget-pasword-button"
-      />
-      <Button
-        buttonText="log in"
-        buttonClass="login-button"
-        onClick={handleSubmit}
-      />
+        <ForgetPassword
+          buttonText="forget password ?"
+          buttonClass="forget-pasword-button"
+        />
+        <Button
+          buttonText="log in"
+          buttonClass="login-button"
+          onClick={handleSubmit}
+        />
+        {error ? <p style={{color : 'red'}}>verify your credentials </p> : null}
+      </div>
     </div>
-</div>
   );
 };
 

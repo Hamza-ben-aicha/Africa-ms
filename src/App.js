@@ -1,7 +1,7 @@
 import Layout from "./components/layout/Layout";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
-import PageOne from "./pages/PageOne";
+import PageOne from "./pages/NormePage/PageOne";
 import PageTwo from "./pages/PageTwo";
 import PageThree from "./pages/PageThree";
 import AuthenticationForm from "./components/AuthForm/AuthenticationForm";
@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import API from "./api";
 import EntProjects from "./components/enProjects/EntProjects";
 import OneProject from "./components/oneProject/OneProject";
+import BasicDocument from "./components/pdfGen/BasicDocument";
 function App() {
   const curentUser = JSON.parse(localStorage.getItem("curentUser"));
   const [user, setUser] = useState();
@@ -58,6 +59,7 @@ function App() {
               }
             />
             <Route path="projet/:id" exact element={<OneProject />} />
+
           </Route>
           {/* </UserContext.Provider> */}
         </Routes>
